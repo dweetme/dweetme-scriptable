@@ -19,8 +19,8 @@
 // curl 'http://dweet.me:3333/publish/yoink/for/rotaryswitch8374?position=2'
 // set widget Parameter to 'rotaryswitch8374, position'
 
-const DWEET_TOPIC = "demoESP32";
-const DWEET_KEY = "status";
+const DWEET_TOPIC = "demoESP32"; // default value overridden by widget Parameter
+const DWEET_KEY = "status"; // default value overriden by widget Parameter
 const DWEET_URL = "http://dweet.me:3333/get/latest/yoink/from/";
 
 if (args.widgetParameter) {
