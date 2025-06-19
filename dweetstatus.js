@@ -110,6 +110,7 @@ async function createWidget() {
       statusText.textColor = colorErr;
       statusText.font = Font.mediumSystemFont(16);
       statusText.centerAlignText();
+    }
 
   } catch (error) {
     // Handle errors during the fetch operation (e.g., network issues)
@@ -139,7 +140,7 @@ async function fetchData(url) {
     const request = new Request(url);
     const jsonResponse = await request.loadJSON();
 
-    if (jsonResponse( {
+    if (jsonResponse) {
       return jsonResponse;
     } else {
       console.log("Failed to get a successful response from dweet.me");
