@@ -5,7 +5,7 @@
 // 1. Copy this entire script.
 // 2. Open the Scriptable app on your iOS device.
 // 3. Tap the '+' icon to create a new script.
-// 4. Paste the code into the new script.
+// 4. Paste this code into the new script.
 // 5. Tap the 'Run' button (▶) to test it.
 // 6. To add it to your Home Screen:
 //    - Go to Home Screen and add Scriptable widget, then tap Done.
@@ -23,24 +23,23 @@ const DWEET_TOPIC = "demoESP32"; // default value overridden by widget Parameter
 const DWEET_KEY = "status"; // default value overriden by widget Parameter
 const DWEET_URL = "http://dweet.me:3333/get/latest/yoink/from/";
 
+// If parameter input(s), override coded defaults
 if (args.widgetParameter) {
-  // dweet_topic = args.widgetParameter;
   parms = args.widgetParameter.split(',').map(item => item.trim());
-  console.log(parms);
-  dweet_topic = parms[0];
+  dweet_topic = parms[0]; // 1st parameter
   dweet_key = DWEET_KEY;
+  // check for a 2nd parameter (any past 2 are ignored)
   if (parms.length > 1) {
     dweet_key = parms[1];
   }
-} else {
+} else { // no parameters, so use coded defaults
   dweet_topic = DWEET_TOPIC;
   dweet_key = DWEET_KEY;
 }
 
-// Main function to create the widget
+// Create the widget
 async function createWidget() {
   const widget = new ListWidget();
-  //widget.backgroundColor = new Color("#2c2c2e"); // Darker gray background
   widget.backgroundColor = Color.dynamic(new Color("#2c2c2c"), Color.darkGray())
 
   try {
@@ -53,8 +52,7 @@ async function createWidget() {
 
     // Fetch data from the URL
     const data = await fetchData(DWEET_URL + dweet_topic);
-    console.log(data)
-    console.log(data.content[dweet_key])
+    console.log(data); // send received dweet to the console for debugging
     // Check if the data and content exist
     if (data && data.content)
     {
@@ -68,15 +66,21 @@ async function createWidget() {
       statusText.textColor = Color.green();
       statusText.font = Font.heavySystemFont(28);
       statusText.centerAlignText();
+
+      // Time-of-day
       const time = widget.addText(timestamp.toLocaleTimeString())
       time.textColor = Color.dynamic(Color.gray(), Color.lightGray())
       time.font = Font.regularSystemFont(16);
       time.centerAlignText();
+
+      // Date
       const date = widget.addText(timestamp.toLocaleDateString())
       date.textColor = Color.dynamic(Color.gray(), Color.lightGray());
       date.font = Font.regularSystemFont(16);
       date.centerAlignText();
+
       } else {
+        // if no dweet available or malformed dweet
         const statusText = widget.addText("no " + dweet_key);
         statusText.textColor = Color.red();
         statusText.font = Font.mediumSystemFont(20);
@@ -99,7 +103,7 @@ async function createWidget() {
 
   widget.addSpacer(); // Pushes the last updated text to the bottom
 
-  // Add a "Last Updated" timestamp
+  // Add a "Last Updated" timestamp (when phone updated the widget)
   const now = new Date();
   const timeFormatter = new DateFormatter();
   timeFormatter.useShortTimeStyle();
