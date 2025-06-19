@@ -1,4 +1,4 @@
-# Dweet.me Scriptable Widget
+# Dweet.me Scriptable iPhone Home Screen Widget
 Shows status of the latest dweet as a widget on a phone using the [Scriptable app](https://scriptable.app/).
 
 Ready-built way to add widgets to iOS that fetch and display a content key value from a dweet.me topic feed.
