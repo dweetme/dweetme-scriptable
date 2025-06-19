@@ -29,6 +29,6 @@ It uses the Scriptable app to place a scriptable widget on the Home or Lock scre
 8. Set Parameter to your `<Dweet topic>, <content key>` or leave blank & set below here in app.
 
 ## Example
-Dweet was posted with:
-`curl 'http://dweet.me:3333/publish/yoink/for/rotaryswitch8374?position=2'`
+Dweet was posted with:`curl 'http://dweet.me:3333/publish/yoink/for/rotaryswitch8374?position=2'`
+
 Set widget Parameter to `rotaryswitch8374, position`.
