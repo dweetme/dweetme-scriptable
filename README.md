@@ -4,6 +4,8 @@ Shows status of the latest dweet as a widget on a phone using the [Scriptable ap
 Ready-built way to add widgets to iOS that fetch and display a content key value from a dweet.me topic feed.
 It uses the Scriptable app to place a scriptable widget on the Home or Lock screen.
 
+:smile: By changing the Parameter values in the widget itself (not the code), you can have multiple widgets simultaneously monitoring different Dweet topics!
+
 This Dweet.me widget is written in JavaScript, so this can be adapted outside the app.
 
 # Instructions
@@ -31,9 +33,9 @@ This Dweet.me widget is written in JavaScript, so this can be adapted outside th
 8. Set Parameter to your `<Dweet topic>, <content key>` or leave blank & set below here in app.
 
 ## Example
-Dweet was posted with:`curl 'http://dweet.me:3333/publish/yoink/for/rotaryswitch8374?position=2'`
+Dweet was posted with: `curl 'http://dweet.me:3333/publish/yoink/for/rotaryswitch8374?position=2'`
 
-Set widget Parameter to `rotaryswitch8374, position`.
+Set widget Parameter value to `rotaryswitch8374, position`.
 
 # Next Steps
 Use this as a beginning base. Feel free to change it and adapt it to your needs (maybe allow the ability to respond/send a Dweet?)!
