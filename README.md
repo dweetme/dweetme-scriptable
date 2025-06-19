@@ -16,7 +16,7 @@ Some cool features:
 2. Open the Scriptable app on your iOS device.
 3. Tap the '+' icon to create a new script.
 4. Paste this code into the new script.
-5. Tap the 'Run' button (▶) to test it.
+5. Tap the 'Run' button (▶) to test it. Note no parameters added, so coded default parameters will probably show an error.
 
 ## To add it to your **Home Screen** (as of iOS 18):
 1. Go to Home Screen and add Scriptable widget, then tap Done.
