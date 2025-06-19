@@ -50,7 +50,7 @@ if (args.widgetParameter) {
 // Create the widget
 async function createWidget() {
   // Color order: (light mode color, dark mode color)
-  colorBackground = Color.dynamic(new Color(#2c2c2c), Color.darkGray());
+  colorBackground = Color.dynamic(new Color("#2c2c2c"), Color.darkGray());
   colorTitle      = Color.dynamic(Color.white(),      Color.white());
   colorStatus     = Color.dynamic(Color.green(),      Color.green());
   colorErr        = Color.dynamic(Color.orange(),     Color.orange());
