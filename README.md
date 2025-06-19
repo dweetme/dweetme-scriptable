@@ -2,9 +2,9 @@
 Shows status of the latest dweet as a widget on a phone using the [Scriptable app](https://scriptable.app/).
 
 Ready-built way to add widgets to iOS that fetch and display a content key value from a dweet.me topic feed.
-It uses the Scriptable app to place a scriptable widget on the Home or Lock screen.
+It uses the Scriptable app to place a scriptable widget on the Home or Lock Screen.
 
-:smile: By changing the Parameter values in the widget itself (not the code), you can have multiple widgets simultaneously monitoring different Dweet topics!
+:smile: Place **multiple Home Screen widgets** monitoring different Dweet topics and/or key values by changing the Parameter values in the widget itself (see instructions below)!
 
 This Dweet.me widget is written in JavaScript, so this can be adapted outside the app.
 
