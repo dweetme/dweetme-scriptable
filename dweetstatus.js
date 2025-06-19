@@ -72,52 +72,45 @@ async function createWidget() {
     const data = await fetchData(DWEET_URL + dweetTopic);
     console.log(data); // send received dweet to the console for debugging
     // Check if the data and content exist
-    if (data.id) // check for successful fetch from Dweet server
-      if (data.topic === dweetTopic)
+    if (data.id && data.topic === dweetTopic) // check for successful fetch from Dweet server
+    {
+      const timestamp = new Date(data.timestamp);
+      if (data.content[dweetKey])
       {
-        const timestamp = new Date(data.timestamp);
-        if (data.content[dweetKey])
-        {
-          const statusValue = data.content[dweetKey];
+        const statusValue = data.content[dweetKey];
 
-        // Display the retrieved status value
-        const statusText = widget.addText(statusValue);
-        statusText.textColor = colorStatus;
-        statusText.font = Font.heavySystemFont(28);
-        statusText.centerAlignText();
+      // Display the retrieved status value
+      const statusText = widget.addText(statusValue);
+      statusText.textColor = colorStatus;
+      statusText.font = Font.heavySystemFont(28);
+      statusText.centerAlignText();
 
-        // Time-of-day
-        const time = widget.addText(timestamp.toLocaleTimeString())
-        time.textColor = colorBody;
-        time.font = Font.regularSystemFont(16);
-        time.centerAlignText();
+      // Time-of-day
+      const time = widget.addText(timestamp.toLocaleTimeString())
+      time.textColor = colorBody;
+      time.font = Font.regularSystemFont(16);
+      time.centerAlignText();
 
-        // Date
-        const date = widget.addText(timestamp.toLocaleDateString())
-        date.textColor = colorBody;
-        date.font = Font.regularSystemFont(16);
-        date.centerAlignText();
+      // Date
+      const date = widget.addText(timestamp.toLocaleDateString())
+      date.textColor = colorBody;
+      date.font = Font.regularSystemFont(16);
+      date.centerAlignText();
 
-        } else {
-          // dweetKey not found
-          const statusText = widget.addText("No " + dweetKey + "found");
-          statusText.textColor = colorErr;
-          statusText.font = Font.mediumSystemFont(16);
-          statusText.centerAlignText();
-        }
       } else {
-        // topic not found (may be due to no updates within server keep period)
-        const statusText = widget.addText("No " + dweetTopic + "found");
+        // dweetKey not found
+        const statusText = widget.addText("No " + dweetKey + " found");
         statusText.textColor = colorErr;
         statusText.font = Font.mediumSystemFont(16);
         statusText.centerAlignText();
-
+      }
     } else {
-      // non-successful Dweet fetch from server
-      const errorText = widget.addText("Error fetching Dweet");
-      errorText.textColor = colorErr;
-      errorText.font = Font.mediumSystemFont(16);
-    }
+      // Topic not found (may be due to no updates within server keep period)
+      const statusText = widget.addText("No '" + dweetTopic + "' topic found");
+      statusText.textColor = colorErr;
+      statusText.font = Font.mediumSystemFont(16);
+      statusText.centerAlignText();
+
   } catch (error) {
     // Handle errors during the fetch operation (e.g., network issues)
     console.error(`Error: ${error}`);
@@ -146,15 +139,15 @@ async function fetchData(url) {
     const request = new Request(url);
     const jsonResponse = await request.loadJSON();
 
-    if (jsonResponse && jsonResponse.id > 0) {
+    if (jsonResponse( {
       return jsonResponse;
     } else {
       console.log("Failed to get a successful response from dweet.me");
       return null;
     }
   } catch (e) {
-    // Rethrow the error to be caught by the main function
-    throw new Error(`Could not load data from URL. Details: ${e.message}`);
+    // Severe error that breaks widget
+    throw new Error(`Could not retrieve Dweet. Details: ${e.message}`);
   }
 }
 
