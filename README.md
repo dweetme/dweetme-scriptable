@@ -9,6 +9,8 @@ Some cool features:
 - Works with the iPhone's Light Mode and Dark Mode.
 - JavaScript open source so you can modify as you see fit and even modified outside the app (browser, Android, Chromebook, etc.).
 
+![Dweet.me widget on iOS 18 Home Screen](dweetme_home_screen_widget_ios18.jpg)
+
 # Instructions
 1. Copy this entire script.
 2. Open the Scriptable app on your iOS device.
