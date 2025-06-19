@@ -1,4 +1,4 @@
-// dweet.me iOS Scriptable Widget
+// Dweet.me iOS Scriptable Widget
 // Fetches and displays a "status" value from a dweet.me feed.
 //
 // INSTRUCTIONS:
@@ -15,89 +15,104 @@
 //    - Set Parameter to [Dweet topic, key] or set below here in app
 //
 // EXAMPLE:
-// dweet was posted with:
+// Dweet was posted with:
 // curl 'http://dweet.me:3333/publish/yoink/for/rotaryswitch8374?position=2'
-// set widget Parameter to 'rotaryswitch8374, position'
+// Set widget Parameter to 'rotaryswitch8374, position'.
 
 const DWEET_TOPIC = "demoESP32"; // default value overridden by widget Parameter
-const DWEET_KEY = "status"; // default value overriden by widget Parameter
-const DWEET_URL = "http://dweet.me:3333/get/latest/yoink/from/";
+const DWEET_KEY   = "status";    // default value overriden by widget Parameter
+const DWEET_URL   = "http://dweet.me:3333/get/latest/yoink/from/"; // do not change
 
 // If parameter input(s), override coded defaults
 if (args.widgetParameter) {
   parms = args.widgetParameter.split(',').map(item => item.trim());
-  dweet_topic = parms[0]; // 1st parameter
-  dweet_key = DWEET_KEY;
+  dweetTopic = parms[0]; // 1st parameter
+  dweetKey = DWEET_KEY;
   // check for a 2nd parameter (any past 2 are ignored)
   if (parms.length > 1) {
-    dweet_key = parms[1];
+    dweetKey = parms[1];
   }
 } else { // no parameters, so use coded defaults
-  dweet_topic = DWEET_TOPIC;
-  dweet_key = DWEET_KEY;
+  dweetTopic = DWEET_TOPIC;
+  dweetKey = DWEET_KEY;
 }
 
 // Create the widget
 async function createWidget() {
+  // Color order: (light mode color, dark mode color)
+  colorBackground = Color.dynamic(new Color(#2c2c2c), Color.darkGray());
+  colorTitle      = Color.dynamic(Color.white(),      Color.white());
+  colorStatus     = Color.dynamic(Color.green(),      Color.green());
+  colorErr        = Color.dynamic(Color.orange(),     Color.orange());
+  colorBody       = Color.dynamic(Color.gray(),       Color.lightGray());
+  colorFooter     = Color.dynamic(Color.gray(),       Color.lightGray());
+
   const widget = new ListWidget();
-  widget.backgroundColor = Color.dynamic(new Color("#2c2c2c"), Color.darkGray())
+  widget.backgroundColor = colorBackground;
 
   try {
     // Create a title for the widget
-    const titleText = widget.addText(dweet_topic + " : " + dweet_key.charAt(0).toUpperCase() + dweet_key.slice(1));
-    titleText.textColor = Color.white();
+    const titleText = widget.addText(dweetTopic + " : " + dweetKey.charAt(0).toUpperCase() + dweetKey.slice(1));
+    titleText.textColor = colorTitle;
     titleText.font = Font.boldSystemFont(16);
     
     widget.addSpacer(10); // Add some space after the title
 
-    // Fetch data from the URL
-    const data = await fetchData(DWEET_URL + dweet_topic);
+    // Fetch the latest Dweet
+    const data = await fetchData(DWEET_URL + dweetTopic);
     console.log(data); // send received dweet to the console for debugging
     // Check if the data and content exist
-    if (data && data.content)
-    {
-      const timestamp = new Date(data.timestamp);
-      if (data.content[dweet_key])
+    if (data.id) // check for successful fetch from Dweet server
+      if (data.topic === dweetTopic)
       {
-        const statusValue = data.content[dweet_key];
+        const timestamp = new Date(data.timestamp);
+        if (data.content[dweetKey])
+        {
+          const statusValue = data.content[dweetKey];
 
-      // Display the retrieved status value
-      const statusText = widget.addText(statusValue);
-      statusText.textColor = Color.green();
-      statusText.font = Font.heavySystemFont(28);
-      statusText.centerAlignText();
-
-      // Time-of-day
-      const time = widget.addText(timestamp.toLocaleTimeString())
-      time.textColor = Color.dynamic(Color.gray(), Color.lightGray())
-      time.font = Font.regularSystemFont(16);
-      time.centerAlignText();
-
-      // Date
-      const date = widget.addText(timestamp.toLocaleDateString())
-      date.textColor = Color.dynamic(Color.gray(), Color.lightGray());
-      date.font = Font.regularSystemFont(16);
-      date.centerAlignText();
-
-      } else {
-        // if no dweet available or malformed dweet
-        const statusText = widget.addText("no " + dweet_key);
-        statusText.textColor = Color.red();
-        statusText.font = Font.mediumSystemFont(20);
+        // Display the retrieved status value
+        const statusText = widget.addText(statusValue);
+        statusText.textColor = colorStatus;
+        statusText.font = Font.heavySystemFont(28);
         statusText.centerAlignText();
-      }
+
+        // Time-of-day
+        const time = widget.addText(timestamp.toLocaleTimeString())
+        time.textColor = colorBody;
+        time.font = Font.regularSystemFont(16);
+        time.centerAlignText();
+
+        // Date
+        const date = widget.addText(timestamp.toLocaleDateString())
+        date.textColor = colorBody;
+        date.font = Font.regularSystemFont(16);
+        date.centerAlignText();
+
+        } else {
+          // dweetKey not found
+          const statusText = widget.addText("No " + dweetKey + "found");
+          statusText.textColor = colorErr;
+          statusText.font = Font.mediumSystemFont(16);
+          statusText.centerAlignText();
+        }
+      } else {
+        // topic not found (may be due to no updates within server keep period)
+        const statusText = widget.addText("No " + dweetTopic + "found");
+        statusText.textColor = colorErr;
+        statusText.font = Font.mediumSystemFont(16);
+        statusText.centerAlignText();
 
     } else {
-      // Handle cases where the expected data is not found
-      const errorText = widget.addText("Data format incorrect");
-      errorText.textColor = Color.orange();
-      errorText.font = Font.mediumSystemFont(14);
+      // non-successful Dweet fetch from server
+      const errorText = widget.addText("Error fetching Dweet");
+      errorText.textColor = colorErr;
+      errorText.font = Font.mediumSystemFont(16);
     }
   } catch (error) {
     // Handle errors during the fetch operation (e.g., network issues)
     console.error(`Error: ${error}`);
-    const errorText = widget.addText("Error fetching status");
-    errorText.textColor = Color.red();
+    const errorText = widget.addText("Error fetching Dweet");
+    errorText.textColor = colorErr;
     errorText.font = Font.mediumSystemFont(14);
   }
 
@@ -108,7 +123,7 @@ async function createWidget() {
   const timeFormatter = new DateFormatter();
   timeFormatter.useShortTimeStyle();
   const lastUpdatedText = widget.addText(`Last updated: ${timeFormatter.string(now)}`);
-  lastUpdatedText.textColor = Color.dynamic(Color.gray(), Color.lightGray());
+  lastUpdatedText.textColor = colorFooter;
   lastUpdatedText.font = Font.footnote();
   lastUpdatedText.rightAlignText();
 
