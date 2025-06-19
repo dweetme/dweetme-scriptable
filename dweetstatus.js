@@ -1,5 +1,6 @@
 // Dweet.me iOS Scriptable Widget
-// Fetches and displays a "status" value from a dweet.me feed.
+// Fetches and displays a content key value from a dweet.me topic feed.
+// A Scriptable widget can be placed on an iOS Home or Lock screen.
 //
 // INSTRUCTIONS:
 // 1. Copy this entire script.
@@ -7,12 +8,21 @@
 // 3. Tap the '+' icon to create a new script.
 // 4. Paste this code into the new script.
 // 5. Tap the 'Run' button (▶) to test it.
-// 6. To add it to your Home Screen:
+// 6. To add it to your Home Screen (as of iOS 18):
 //    - Go to Home Screen and add Scriptable widget, then tap Done.
 //    - Long tap on widget & select 'Edit Widget'
 //    - Set 'Script' to 'DweetStatus'.
 //    - Set 'When Interacting' to 'Run Script'.
-//    - Set Parameter to [Dweet topic, key] or set below here in app
+//    - Set Parameter to your [Dweet topic, key] or leave blank & set below here in app.
+// 7. To add it to your Lock Screen (as of iOS 18):
+//    - Go to 'Customize' Lock Screen (tap and hold on Lock Screen & tap 'Customize').
+//    - Select the Lock Screen you want to customize.
+//    - Tap on widget area to bring up 'Add Widgets'.
+//    - Scroll down to Scriptable, select, & tap or drag to add widget.
+//    - Tap the placed Scriptable widget.
+//    - Set 'Script' to 'DweetStatus'.
+//    - Set 'When Interacting' to 'Run Script'.
+//    - Set Parameter to your [Dweet topic, key] or leave blank & set below here in app.
 //
 // EXAMPLE:
 // Dweet was posted with:
