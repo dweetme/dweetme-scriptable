@@ -1,8 +1,10 @@
 # Dweet.me Scriptable Widget
-Shows status of the latest dweet as a widget on a phone using the Scriptable app.
+Shows status of the latest dweet as a widget on a phone using the [Scriptable app](https://scriptable.app/).
 
-Ready-built way to add widgets to iOS and Android (not tested) that fetch and display a content key value from a dweet.me topic feed.
+Ready-built way to add widgets to iOS that fetch and display a content key value from a dweet.me topic feed.
 It uses the Scriptable app to place a scriptable widget on the Home or Lock screen.
+
+This Dweet.me widget is written in JavaScript, so this can be adapted outside the app.
 
 # Instructions
 1. Copy this entire script.
@@ -32,3 +34,6 @@ It uses the Scriptable app to place a scriptable widget on the Home or Lock scre
 Dweet was posted with:`curl 'http://dweet.me:3333/publish/yoink/for/rotaryswitch8374?position=2'`
 
 Set widget Parameter to `rotaryswitch8374, position`.
+
+# Next Steps
+Use this as a beginning base. Feel free to change it and adapt it to your needs (maybe allow the ability to respond/send a Dweet?)!
