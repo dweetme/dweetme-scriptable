@@ -99,7 +99,7 @@ async function createWidget() {
       const timestamp = new Date(data.timestamp);
       if (data.content[dweetKey])
       {
-        const statusValue = data.content[dweetKey];
+        const statusValue = data.content[dweetKey].toString();
 
       // Display the retrieved status value
       const statusText = widget.addText(statusValue);
